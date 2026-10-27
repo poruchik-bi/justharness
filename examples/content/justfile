@@ -1,0 +1,14 @@
+# List the content workspace commands.
+[metadata('effect:read', 'cost:free', 'duration:short')]
+help:
+    @just --list
+
+# Build and verify the fixture review sheet.
+[metadata('effect:local', 'cost:free', 'duration:short')]
+check:
+    @just content doctor
+    @just content build
+    @just content verify
+
+# Turn source records into a reviewable content artifact.
+mod content

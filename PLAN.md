@@ -1,5 +1,7 @@
 # JustHarness implementation plan
 
+**Implementation status (2026-10-27):** The v0.1 contract, minimal and content examples, metadata validator, optional run ledger, root `just check`, and CI job are implemented. The existing-project pilot and release tag in step 7 are still open. The contract minimum `just` version is 1.42 because it uses `[metadata(...)]`; this implementation has been exercised with 1.46.0.
+
 ## Assessment of the source proposal
 
 The [source conversation](https://mammouth.ai/shared/588f41bd-935c-40db-808a-e90f93638878) proposes a domain-neutral agent harness made from nested justfiles, skills, a validator, domain packs, and a review step for self-improvement. The valuable core is **discovery → documented command → verifiable result**. This is practical because `just` already supports [documented recipes](https://just.systems/man/en/documentation-comments.html), [modules](https://just.systems/man/en/modules.html), and [module-specific listing](https://just.systems/man/en/listing-available-recipes.html). The [Agent Skills format](https://github.com/agentskills/agentskills/blob/main/docs/specification.mdx) already covers optional, progressively loaded instructions.
@@ -52,7 +54,7 @@ examples/minimal/AGENTS.md
 examples/minimal/skills/.../SKILL.md   # only if the example needs a workflow
 ```
 
-Use `just` 1.31 or newer as the initial compatibility target: modules were stabilized in that release. Put a `help` recipe first so bare `just` works without the newer `default-list` setting. Recheck the minimum version against every feature actually used before release.
+Use `just` 1.42 or newer: `[metadata(...)]` requires it. Put a `help` recipe first so bare `just` works without the newer `default-list` setting.
 
 ## Steps
 
@@ -83,7 +85,7 @@ Use `just` 1.31 or newer as the initial compatibility target: modules were stabi
 
 ### 4. Add only the validation the example needs
 
-- Start with `just --fmt --check`, `just --list`, and a smoke check for the example. Add a custom checker only if these leave a concrete recurring failure, such as missing public descriptions or broken skill references.
+- Run `just --unstable --fmt --check`, `just --list`, and a smoke check for the example. The metadata contract adds a small checker for missing public descriptions, invalid metadata, missing publish gate declarations, and broken verify references.
 - If a checker is needed, read `just --dump --dump-format json` instead of parsing justfile syntax with regular expressions. Keep one fixture for each failure it catches.
 - Run the same checks locally and in CI.
 

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "post-101",
+    "title": "A small studio tests a new animation style",
+    "source": "https://example.com/posts/101",
+    "summary": "The clip demonstrates a short visual transition.",
+    "claims": ["The transition takes fewer than two seconds."]
+  },
+  {
+    "id": "post-102",
+    "title": "A creator explains their editing workflow",
+    "source": "https://example.com/posts/102",
+    "summary": "The post describes how a draft becomes a finished clip.",
+    "claims": ["The workflow uses a review pass before publication."]
+  }
+]

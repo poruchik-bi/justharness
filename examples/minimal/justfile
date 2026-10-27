@@ -1,0 +1,13 @@
+# List this workspace's commands.
+[metadata('effect:read', 'cost:free', 'duration:short')]
+help:
+    @just --list
+
+# Check the example's prerequisites and required documentation.
+[metadata('effect:read', 'cost:free', 'duration:short')]
+check:
+    @just work doctor
+    @just work check
+
+# Inspect and check this workspace.
+mod work
