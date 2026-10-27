@@ -19,6 +19,16 @@ This note assumes “yokto” means the [Yocto Project](https://docs.yoctoprojec
 
 Yocto can [generate its task dependency graph](https://docs.yoctoproject.org/bitbake/dev/bitbake-user-manual/bitbake-user-manual-intro.html#generating-dependency-graphs) and uses [task signatures and a shared state cache](https://docs.yoctoproject.org/dev/overview-manual/concepts.html#shared-state-cache) to avoid rebuilding unchanged outputs. Its [layer metadata](https://docs.yoctoproject.org/dev/dev-manual/layers.html) can declare dependencies and release compatibility. Those features are valuable because builds have a relatively well-defined relationship between inputs and outputs. JustHarness can borrow the discipline of stating dependencies and provenance without claiming equivalent reproducibility.
 
+## Keep three concerns separate
+
+Yocto separates reusable recipes from [distribution policy and machine configuration](https://docs.yoctoproject.org/dev/overview-manual/concepts.html). The analogous separation for operational blocks is:
+
+- **Mechanism:** the script and recipe that fetch, transform, check, or render something.
+- **Project policy:** which source is acceptable, what quality threshold applies, and who may publish or deploy. A skill or project instruction may express this judgment.
+- **Environment:** installed tools, credentials, API endpoints, hardware, and target account. These belong to the receiving workspace or operator.
+
+For example, a media transcription command may be reusable. A project's rules for handling personal recordings and its API keys are not part of that borrowed command. Blending all three concerns into a copied module makes reuse misleading and can send work to the wrong place.
+
 ## Two different graphs
 
 1. **Execution graph:** commands and scripts that must run in a particular order. Encode only relationships that are safe to automate as recipe dependencies or in a project script.
