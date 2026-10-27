@@ -27,6 +27,8 @@ Its value is measured in faster discovery, fewer wrong-environment actions, clea
 
 ## Capability graph to test after v0.1
 
+The [Yocto comparison](docs/yocto-parallel.md) separates executable dependencies from the broader graph of goals, skills, commands, artifacts, and evidence. It also gives a concrete cross-workspace reuse test.
+
 As a workspace grows, its links can form an operational knowledge graph: a goal points to a skill, a skill points to recipes, recipes call scripts or services, and their outputs feed checks and later recipes. One recipe may support several workflows; one artifact may be evidence for several decisions. The graph can live in ordinary files and Git links before any index or database is justified.
 
 A borrowable building block is a documented command plus only the script, skill, example input, and check it actually needs. Its contract names prerequisites, inputs, effects, outputs, and how to verify them. Someone can copy it into another workspace, adapt paths and credentials locally, run the example, and review the diff. Teams can propose improvements through normal Git review; origin and license remain visible.
