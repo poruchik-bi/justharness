@@ -85,7 +85,7 @@ Use `just` 1.31 or newer as the initial compatibility target: modules were stabi
 ### 7. Pilot and publish v0.1
 
 - Retrofit one existing workspace and ask a fresh agent or contributor to complete the same task with and without the catalog. Record discovery steps, failures, elapsed time, and context size if measurable. Describe the small sample honestly.
-- Tighten the README quickstart and compatibility note from pilot feedback. Pick a license before advertising the repository as reusable open source.
+- Tighten the README quickstart and compatibility note from pilot feedback. Keep the chosen MIT license visible in release documentation.
 - Tag v0.1 only after examples, checks, and links work from a clean clone.
 
 **Done when:** another person can adopt the pattern without this conversation and the repo contains evidence for its main claims.

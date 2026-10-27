@@ -7,3 +7,5 @@ A small, vendor-neutral convention for exposing workspace tasks to people and sh
 The goal is a useful root command catalog, focused modules, and optional skills that explain when to use commands. The same commands should work for a person, an agent, and CI.
 
 This idea grew from a [shared research conversation](https://mammouth.ai/shared/588f41bd-935c-40db-808a-e90f93638878). The plan includes an independent assessment of that proposal.
+
+Licensed under [MIT](LICENSE).
