@@ -21,6 +21,8 @@ The project should not add an agent runtime, LLM client, hosted service, automat
 
 JustHarness is a **repository-level operating contract** for repeatable work. The root catalog answers *what can I do here?*; a recipe runs the established operation; a skill explains decisions that require judgment; a check or artifact shows what happened. The project-specific script remains the implementation. A terminal app can present this contract, and an agent can use it, without either becoming the owner of project logic.
 
+`just` is the v0.1 reference implementation. The discovery, procedure, execution, and evidence pattern may apply to other task runners, but compatibility with them should be claimed only after a real adoption test.
+
 Its value is measured in faster discovery, fewer wrong-environment actions, clearer handoffs, and repeatable verification. It cannot grant permissions, guarantee output quality, or replace the project's own security and review controls. Adoption should improve an existing command surface incrementally, not require a repo-wide rewrite.
 
 ## v0.1 target
