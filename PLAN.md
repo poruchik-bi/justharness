@@ -25,6 +25,14 @@ JustHarness is a **repository-level operating contract** for repeatable work. Th
 
 Its value is measured in faster discovery, fewer wrong-environment actions, clearer handoffs, and repeatable verification. It cannot grant permissions, guarantee output quality, or replace the project's own security and review controls. Adoption should improve an existing command surface incrementally, not require a repo-wide rewrite.
 
+## Capability graph to test after v0.1
+
+As a workspace grows, its links can form an operational knowledge graph: a goal points to a skill, a skill points to recipes, recipes call scripts or services, and their outputs feed checks and later recipes. One recipe may support several workflows; one artifact may be evidence for several decisions. The graph can live in ordinary files and Git links before any index or database is justified.
+
+A borrowable building block is a documented command plus only the script, skill, example input, and check it actually needs. Its contract names prerequisites, inputs, effects, outputs, and how to verify them. Someone can copy it into another workspace, adapt paths and credentials locally, run the example, and review the diff. Teams can propose improvements through normal Git review; origin and license remain visible.
+
+Test this direction by moving one real block between two different workspaces and composing it with an existing command. Success means a fresh agent can find the block, run it on a fixture, and trace the result to its inputs without reading the donor project's whole codebase. Add a registry, graph database, or package manager only if that experiment reveals a concrete need.
+
 ## v0.1 target
 
 An agent can run bare `just` to discover commands, inspect one module, run a read-only command, and verify its result. A person can inspect and run those same commands, and CI can reuse them. `AGENTS.md` gives the agent the entry point without requiring a framework. The entire example must run locally with documented prerequisites and no secrets.
