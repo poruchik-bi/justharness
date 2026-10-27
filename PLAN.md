@@ -1,6 +1,6 @@
 # JustHarness implementation plan
 
-**Implementation status (2026-10-27):** The v0.1 contract, minimal and content examples, metadata validator, optional run ledger, root `just check`, and CI job are implemented. The existing-project pilot and release tag in step 7 are still open. The contract minimum `just` version is 1.42 because it uses `[metadata(...)]`; this implementation has been exercised with 1.46.0.
+**Implementation status (2026-10-27):** The v0.1 contract, minimal and content examples, metadata validator, optional run ledger, root `just check`, and CI job are implemented. v0.1.0 is tagged. Existing-project pilots are run privately; their findings are not published, so public claims are limited to what the examples demonstrate. The contract minimum `just` version is 1.42 because it uses `[metadata(...)]`; this implementation has been exercised with 1.46.0.
 
 ## Assessment of the source proposal
 

@@ -2,7 +2,7 @@
 
 A small, vendor-neutral convention for exposing workspace tasks to people and shell-capable agents through [`just`](https://just.systems/).
 
-**Status:** v0.1 examples and checks implemented; an existing-project pilot and release tag remain open. The [implementation plan](PLAN.md) records the remaining acceptance work.
+**Status:** v0.1.0: the command contract, two runnable examples, the validator, and the optional run ledger. The [implementation plan](PLAN.md) records scope and what comes next.
 
 The goal is a simple command interface that agents can discover and run, and people can inspect and run. Modules reveal related commands on demand; optional skills explain when to use them. The same commands should work in CI.
 
@@ -31,7 +31,7 @@ The content example writes a review sheet to `examples/content/out/review.md`. S
 
 In an existing workspace, the maintainer keeps the scripts that already work and exposes repeated operations as documented `just` recipes. Bare `just` is the entry point; coherent areas can have modules, with `just --list <module>` revealing their commands. `AGENTS.md` tells an agent to use that interface, and an optional `SKILL.md` explains decisions that need more than a command description. The agent runs a recipe and reports its check or artifact. A person can run the same recipe and review any proposed improvement as a normal Git diff.
 
-The first release also needs a pilot in an existing repo to test whether this interface improves real work. The examples establish mechanics; they do not measure adoption value yet. The same `just check` runs in GitHub Actions.
+The examples establish mechanics. They make no published claim about adoption value; measure that in your own repository with the [adoption guide](docs/adoption.md). The same `just check` runs in GitHub Actions.
 
 ## Usage scenarios to prove
 
