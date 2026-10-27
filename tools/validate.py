@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Check the public command contract in a justfile and its modules."""
 
+import argparse
 import json
 import subprocess
 import sys
@@ -14,7 +15,7 @@ VALUES = {
 }
 
 
-def validate(path):
+def validate(path, selected=None):
     result = subprocess.run(
         ["just", "--justfile", str(path), "--dump", "--dump-format", "json"],
         capture_output=True,
@@ -32,14 +33,22 @@ def validate(path):
             recipes[prefix + name] = recipe
         for name, child in module["modules"].items():
             module_name = prefix + name
-            if not child.get("doc"):
+            if not child.get("doc") and (selected is None or any(
+                item.startswith(module_name + "::") for item in selected
+            )):
                 errors.append(f"{module_name}: module needs a description")
             collect(child, module_name + "::")
 
     collect(root)
+    if selected is not None:
+        for name in selected - recipes.keys():
+            errors.append(f"{name}: selected recipe does not exist")
+        for name in selected & recipes.keys():
+            if recipes[name]["private"]:
+                errors.append(f"{name}: selected recipe is private")
 
     for name, recipe in recipes.items():
-        if recipe["private"]:
+        if recipe["private"] or (selected is not None and name not in selected):
             continue
         if not recipe.get("doc"):
             errors.append(f"{name}: recipe needs a description")
@@ -72,10 +81,12 @@ def validate(path):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        sys.exit("usage: python3 tools/validate.py PATH/TO/justfile")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("path", type=Path, help="path to a justfile")
+    parser.add_argument("--recipe", action="append", help="validate only this public recipe (repeatable)")
+    args = parser.parse_args()
     try:
-        problems = validate(Path(sys.argv[1]).resolve())
+        problems = validate(args.path.resolve(), set(args.recipe) if args.recipe else None)
     except FileNotFoundError as error:
         sys.exit(f"missing tool: {error.filename}")
     for problem in problems:

@@ -13,11 +13,11 @@ help:
 
 
 class ValidatorTests(unittest.TestCase):
-    def check(self, source):
+    def check(self, source, selected=None):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "justfile"
             path.write_text(source)
-            return validate(path)
+            return validate(path, selected)
 
     def test_valid_recipe(self):
         self.assertEqual(self.check(BASE), [])
@@ -60,6 +60,17 @@ class ValidatorTests(unittest.TestCase):
             module.mkdir()
             (module / "mod.just").write_text(BASE)
             self.assertIn("module needs a description", " ".join(validate(path)))
+
+    def test_scoped_check_ignores_legacy_recipe(self):
+        legacy = "\nlegacy:\n    @true\n"
+        self.assertEqual(self.check(BASE + legacy, {"help"}), [])
+        self.assertIn("recipe needs a description", " ".join(self.check(BASE + legacy)))
+
+    def test_scoped_check_rejects_unknown_recipe(self):
+        self.assertIn("selected recipe does not exist", " ".join(self.check(BASE, {"missing"})))
+
+    def test_scoped_check_rejects_private_recipe(self):
+        self.assertIn("selected recipe is private", " ".join(self.check(BASE + "\n_private:\n    @true\n", {"_private"})))
 
 
 if __name__ == "__main__":
