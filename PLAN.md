@@ -12,14 +12,14 @@ My changes to the proposal:
 4. **Use `just`'s working-directory behavior.** Recipes normally run from their justfile's directory, and module recipes run from the module directory. Use `justfile_directory()` when a recipe needs the repository root; do not force absolute paths into every command. See the [working-directory documentation](https://just.systems/man/en/working-directory.html).
 5. **Make skills optional and purposeful.** A one-step recipe needs a good description. Add a `SKILL.md` only for decisions or multi-step work that a recipe cannot explain. Keep command logic in `just` or its scripts.
 6. **Measure claims.** Nested catalogs should be demonstrated with a real task and output. Do not promise token savings or broad domain coverage until examples and comparisons support them.
-7. **Adopt without breaking command names.** A flat catalog can be useful. Introduce modules when discovery suffers; moving an imported justfile into a module changes invocation and the recipe's working directory, so preserve existing callers or migrate them deliberately.
+7. **Keep the command interface simple.** A flat catalog is valid regardless of its recipe count. Use modules to expose coherent capabilities on demand when that helps an agent select and understand the right command. Humans should be able to inspect the same interface. Moving an imported justfile into a module changes invocation and working directory, so preserve existing callers or migrate them deliberately.
 8. **Describe operational effects.** A command may be interactive, long-running, metered, or connected to production. Its description and procedure should make those facts visible. A read-only-sounding name is not proof that execution has no side effects.
 
 The project should not add an agent runtime, LLM client, hosted service, automatic tool generation, or a replacement for MCP. APIs and MCP remain useful for remote services, authentication, and clients without shell access.
 
 ## Product framing
 
-JustHarness is a **repository-level operating contract** for repeatable work. The root catalog answers *what can I do here?*; a recipe runs the established operation; a skill explains decisions that require judgment; a check or artifact shows what happened. The project-specific script remains the implementation. A terminal app can present this contract, and an agent can use it, without either becoming the owner of project logic.
+JustHarness is a **repository-level operating contract** for repeatable work. The root catalog answers *what can I do here?*; a module can reveal one area of work; a recipe runs the established operation; a skill explains decisions that require judgment; a check or artifact shows what happened. Agents use this interface to act, and people can read the same recipes to review or run the work. The project-specific script remains the implementation. A terminal app can present the contract without owning project logic.
 
 `just` is the v0.1 reference implementation. The discovery, procedure, execution, and evidence pattern may apply to other task runners, but compatibility with them should be claimed only after a real adoption test.
 
@@ -27,7 +27,7 @@ Its value is measured in faster discovery, fewer wrong-environment actions, clea
 
 ## v0.1 target
 
-A user can copy a small example into an existing workspace, run bare `just` to discover commands, inspect one module, run a read-only command, and use the same command in CI. An agent can follow `AGENTS.md` to discover and verify commands without learning a framework. The entire example must run locally with documented prerequisites and no secrets.
+An agent can run bare `just` to discover commands, inspect one module, run a read-only command, and verify its result. A person can inspect and run those same commands, and CI can reuse them. `AGENTS.md` gives the agent the entry point without requiring a framework. The entire example must run locally with documented prerequisites and no secrets.
 
 The public example proves mechanics; adoption in an existing workspace tests usefulness. Private workspaces may be used for pilot measurements, but their commands, data, and findings must not be published without approval.
 
@@ -52,7 +52,7 @@ Use `just` 1.31 or newer as the initial compatibility target: modules were stabi
 - Add two real, harmless recipes in the module: one that inspects workspace state and one that checks an example artifact. Use existing system tools and meaningful exit codes; no placeholder `echo` commands presented as capabilities.
 - Check `just`, `just --list work`, each recipe, and invocation from a nested directory.
 
-**Done when:** a new user can discover and execute the example using only the README and `just` output.
+**Done when:** a fresh agent can discover and execute the example using `AGENTS.md` and `just` output, and a person can review the same command without tracing hidden tooling.
 
 ### 2. Write the one-page convention
 
