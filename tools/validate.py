@@ -55,6 +55,8 @@ def validate(path, selected=None):
 
         tags = {}
         for attribute in recipe["attributes"]:
+            if not isinstance(attribute, dict):  # argument-less attributes ("positional-arguments") dump as strings
+                continue
             for item in attribute.get("metadata", []):
                 key, separator, value = item.partition(":")
                 if not separator or not value:

@@ -22,6 +22,10 @@ class ValidatorTests(unittest.TestCase):
     def test_valid_recipe(self):
         self.assertEqual(self.check(BASE), [])
 
+    def test_argumentless_attribute(self):
+        source = BASE.replace("help:", "[positional-arguments]\nhelp *args:")
+        self.assertEqual(self.check(source), [])
+
     def test_missing_description(self):
         self.assertIn("recipe needs a description", " ".join(self.check(BASE.replace("# Show commands.\n", ""))))
 
