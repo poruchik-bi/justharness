@@ -1,0 +1,20 @@
+# List this project's commands.
+[metadata('effect:read', 'cost:free', 'duration:short')]
+help:
+    @just --list
+
+# Check that uv is available; tox and the tools come from uv.lock.
+[metadata('effect:read', 'cost:free', 'duration:short')]
+doctor:
+    @command -v uv >/dev/null || { echo 'FAIL uv unavailable → install uv: https://docs.astral.sh/uv/' >&2; exit 1; }
+    @echo 'prerequisites: OK'
+
+# Run the test suite on one installed Python, as CI does per version (default 3.12).
+[metadata('effect:local', 'cost:free', 'duration:short')]
+test python="3.12":
+    @uv run --locked tox run -e py{{ python }}
+
+# Run mypy and pyright, as the CI typing job does.
+[metadata('effect:local', 'cost:free', 'duration:long')]
+typing:
+    @uv run --locked tox run -e typing

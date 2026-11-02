@@ -1,0 +1,5 @@
+CREATE TABLE notes (
+    id INTEGER PRIMARY KEY,
+    body TEXT NOT NULL CHECK (length(body) > 0),
+    created TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

@@ -2,23 +2,33 @@
 
 A small, vendor-neutral convention for exposing workspace tasks to people and shell-capable agents through [`just`](https://just.systems/).
 
-**Status:** v0.1.0: the command contract, two runnable examples, the validator, and the optional run ledger. The [implementation plan](PLAN.md) records scope and what comes next.
+**Status:** v0.2.0: the command contract, three runnable examples, the validator, a Claude Code allowlist generator, an adopt skill, an A/B benchmark harness, and the optional run ledger. The [implementation plan](PLAN.md) records scope and what comes next.
 
 The goal is a simple command interface that agents can discover and run, and people can inspect and run. Modules reveal related commands on demand; optional skills explain when to use them. The same commands should work in CI.
 
 ## Try it
 
+In Claude Code, install the adopt skill and ask your agent to adopt JustHarness in your repository:
+
+```text
+/plugin install justharness --marketplace poruchik-bi/justharness
+```
+
+To explore this repository instead:
+
 Install [`just` 1.42 or newer](https://just.systems/man/en/installation.html), Python 3, and Git. From this repository:
 
 ```sh
 just                    # discover commands
-just check              # check the command contract and both examples
+just check              # check the command contract and the examples
 just --justfile examples/minimal/justfile --list work
 just --justfile examples/content/justfile content build
 just --justfile examples/content/justfile content verify
+just --justfile examples/app/justfile --list release
+python3 tools/allowlist.py examples/app/justfile
 ```
 
-The content example writes a review sheet to `examples/content/out/review.md`. See the one-page [command contract](SPEC.md), [adoption guide](docs/adoption.md), and [optional run ledger](docs/ledger.md). `AGENTS.md` gives agents the same entry point.
+The content example writes a review sheet to `examples/content/out/review.md`. The [app example](examples/app/README.md) shows tests, a database migration, and a gated release. `tools/allowlist.py` turns `read` recipes into Claude Code allow rules and puts `external`, `publish`, and `metered` recipes behind a prompt. To retrofit your own repository, give your agent the [adopt skill](skills/justharness-adopt/SKILL.md). `just bench` runs a metered [A/B benchmark](docs/benchmark.md) of fresh agents with and without a catalog. See the one-page [command contract](SPEC.md), [adoption guide](docs/adoption.md), and [optional run ledger](docs/ledger.md). `AGENTS.md` gives agents the same entry point.
 
 ## Problems to solve
 

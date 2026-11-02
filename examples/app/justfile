@@ -1,0 +1,28 @@
+# List the app's commands.
+[metadata('effect:read', 'cost:free', 'duration:short')]
+help:
+    @just --list
+
+# Check prerequisites, migrate the local database, and run the tests through a release preview.
+[metadata('effect:local', 'cost:free', 'duration:short')]
+check: doctor
+    @just db migrate
+    @just db status
+    @just release deploy
+
+# Check that Python 3 with SQLite is available.
+[metadata('effect:read', 'cost:free', 'duration:short')]
+doctor:
+    @command -v python3 >/dev/null || { echo 'FAIL python3 unavailable → install Python 3' >&2; exit 1; }
+    @python3 -c 'import sqlite3' 2>/dev/null || { echo 'FAIL Python lacks sqlite3 → install a Python build with SQLite' >&2; exit 1; }
+    @echo 'prerequisites: OK'
+
+# Run the unit tests without writing bytecode or the local database.
+[metadata('effect:read', 'cost:free', 'duration:short')]
+test:
+    @PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests
+
+# Migrate and inspect the local SQLite database.
+mod db
+# Preview or publish a release bundle.
+mod release

@@ -1,0 +1,14 @@
+{
+  "name": "justharness",
+  "owner": {
+    "name": "poruchik-bi"
+  },
+  "description": "JustHarness: agent-operable just command catalogs.",
+  "plugins": [
+    {
+      "name": "justharness",
+      "source": "./",
+      "description": "Retrofit a repository with a documented just command catalog that coding agents can discover, run safely, and verify."
+    }
+  ]
+}

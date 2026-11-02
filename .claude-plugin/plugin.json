@@ -1,0 +1,8 @@
+{
+  "name": "justharness",
+  "description": "Retrofit a repository with a documented just command catalog that coding agents can discover, run safely, and verify.",
+  "version": "0.2.0",
+  "author": { "name": "poruchik-bi" },
+  "homepage": "https://github.com/poruchik-bi/justharness",
+  "license": "MIT"
+}
