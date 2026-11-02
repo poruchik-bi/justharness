@@ -50,6 +50,7 @@ def run(args, variant, index, source):
         "--model", args.model,
         "--output-format", "stream-json", "--verbose",
         "--setting-sources", "project",
+        "--strict-mcp-config",
         "--no-session-persistence",
         "--allowedTools", "Bash", "Read", "Grep", "Glob",
         "--disallowedTools", "Edit", "Write", "Bash(sudo *)", "Bash(pip install *)",
